@@ -84,7 +84,7 @@ class WC_Admin_List_Table_Products extends WC_Admin_List_Table {
 		// Trade-off: private-status tally may read slightly high for restricted roles (other users' privates included) — non-critical.
 		wp_cache_set_multiple(
 			array(
-				'posts-product'                                   => $cache,
+				'posts-product' => $cache,
 				'posts-product_readable_' . get_current_user_id() => $cache,
 			),
 			'counts'
