@@ -80,7 +80,10 @@ class WC_Admin_List_Table_Products extends WC_Admin_List_Table {
 	public function prime_status_counts_cache(): void {
 		// Performance note: the current listings architecture prevents us from isolating wp_count_posts calls.
 		// In the context of the products page, we can still isolate the underlying SQL by warming up the wp_count_posts cache.
-		$cache = (object) array_map( 'strval', wc_get_container()->get( ProductUtil::class )->get_counts_for_type( 'product' ) );
+		$cache = (object) array_map(
+			static fn ( $count ) => $count ? (string) $count : (int) $count,
+			wc_get_container()->get( ProductUtil::class )->get_counts_for_type( 'product' )
+		);
 		// Trade-off: private-status tally may read slightly high for restricted roles (other users' privates included) — non-critical.
 		wp_cache_set_multiple(
 			array(

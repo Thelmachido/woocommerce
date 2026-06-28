@@ -139,7 +139,7 @@ class ProductUtil {
 	 * @return array<string,int>
 	 */
 	public function get_counts_for_type( string $post_type ): array {
-		$product_count_cache = new ProductCountCache();
+		$product_count_cache = wc_get_container()->get( ProductCountCache::class );
 		$count_per_status    = $product_count_cache->get( $post_type );
 
 		if ( null === $count_per_status ) {
